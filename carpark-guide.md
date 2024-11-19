@@ -203,11 +203,7 @@ You realize that you need a way to configure the car park system. You decide to 
 **Additional evidencing:**
 Ensure that you have completed the previous steps and created the appropriate tags. Confirm that the tags have been created by running `git tag` in the terminal and provide a screenshot of the output.
 
-```bash
-[student@workstation ipriot-car-park-prj]$ git tag
-s1
-s2
-```
+![Show git tags](images/git-tags.png)
 
 ### Relate the classes
 
