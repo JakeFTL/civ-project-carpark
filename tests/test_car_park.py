@@ -1,5 +1,6 @@
 import unittest
 from car_park import CarPark
+from sensor import EntrySensor
 
 
 class TestCarPark(unittest.TestCase):
@@ -41,6 +42,15 @@ class TestCarPark(unittest.TestCase):
     def test_removing_a_car_that_does_not_exist(self):
         with self.assertRaises(ValueError):
             self.car_park.remove_car("NO-1")
+
+    def test_register_raises_type_error(self):
+        with self.assertRaises(TypeError):
+            self.car_park.register("Hi Raf! Hope you're having a good day!")
+
+    def test_register_accepts_sensors(self):
+        test_sensor = EntrySensor(1, True, self.car_park)
+        self.car_park.register(test_sensor)
+        self.assertIn(test_sensor, self.car_park.sensors)
 
 
 if __name__ == "__main__":

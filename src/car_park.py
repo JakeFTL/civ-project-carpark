@@ -25,7 +25,7 @@ class CarPark:
         if isinstance(component, Sensor):
             self.sensors.append(component)
         elif isinstance(component, Display):
-            self.displays(component)
+            self.displays.append(component)
 
     def add_car(self, plate):
         self.plates.append(plate)
