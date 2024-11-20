@@ -6,8 +6,8 @@ from pathlib import Path
 
 class TestCarPark(unittest.TestCase):
     def setUp(self):
-        self.log_path = Path("new_log.txt")
-        self.car_park = CarPark("123 Example Street", 100, log_file = "log.txt")
+        self.log_name = "new_log.txt"
+        self.car_park = CarPark("123 Example Street", 100, log_file=self.log_name)
 
     def test_car_park_initialized_with_all_attributes(self):
         self.assertIsInstance(self.car_park, CarPark)
@@ -17,7 +17,7 @@ class TestCarPark(unittest.TestCase):
         self.assertEqual(self.car_park.sensors, [])
         self.assertEqual(self.car_park.displays, [])
         self.assertEqual(self.car_park.available_bays, 100)
-        self.assertEqual(self.car_park.log_file, "log.txt")
+        self.assertEqual(self.car_park.log_file, Path(self.log_name))
 
     def test_add_car(self):
         self.car_park.add_car("FAKE-001")
@@ -56,14 +56,14 @@ class TestCarPark(unittest.TestCase):
         self.assertIn(test_sensor, self.car_park.sensors)
 
     def test_log_file_created(self):
-        self.assertTrue(self.log_path.exists())
+        self.assertTrue(Path(self.log_name).exists())
 
     def tearDown(self):
-        self.log_path.unlink(missing_ok=True)
+        Path(self.log_name).unlink(missing_ok=True)
 
     def test_car_logged_when_entering(self):
-        new_carpark = CarPark("123 Example Street", 100,
-                              log_file="new_log.txt")  # TODO: change this to use a class attribute or new instance variable
+        # new_carpark = CarPark("123 Example Street", 100,
+        #                       log_file=self.log_name)
         self.car_park.add_car("NEW-001")
         with self.car_park.log_file.open() as f:
             last_line = f.readlines()[-1]
@@ -72,15 +72,15 @@ class TestCarPark(unittest.TestCase):
         self.assertIn("\n", last_line)  # check entry has a new line
 
     def test_car_logged_when_exiting(self):
-        new_carpark = CarPark("123 Example Street", 100,
-                              log_file="new_log.txt")  # TODO: change this to use a class attribute or new instance variable
+        # new_carpark = CarPark("123 Example Street", 100,
+        #                       log_file=self.log_name)
         self.car_park.add_car("NEW-001")
         self.car_park.remove_car("NEW-001")
         with self.car_park.log_file.open() as f:
             last_line = f.readlines()[-1]
-        self.assertIn(last_line, "NEW-001")  # check plate entered
-        self.assertIn(last_line, "exited")  # check description
-        self.assertIn(last_line, "\n")  # check entry has a new line
+        self.assertIn("NEW-001", last_line)  # check plate entered
+        self.assertIn("exited", last_line)  # check description
+        self.assertIn("\n", last_line)  # check entry has a new line
 
 
 if __name__ == "__main__":
