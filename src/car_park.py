@@ -13,7 +13,7 @@ class CarPark:
                  sensors=None,
                  displays=None,
                  log_file=Path("log.txt"),
-                 config_file=None
+                 config_file=Path("config.json")
                  ):
         self.location = location
         self.capacity = capacity
