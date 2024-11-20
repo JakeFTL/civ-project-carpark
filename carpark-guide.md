@@ -437,26 +437,24 @@ This time, we will push the tag to the remote repository:
 
 Add a screenshot of the GitHub repository after pushing the tag, showing the CarPark class with the new methods:
 
-```markdown
 ![Added methods to the car park class](images/methods-to-car-park.png)
-```
 
 Answer the following questions:
 > **Review Questions**
 >
 > 1. **Which class is responsible for each of the following pieces of information (and why)?**
 >    - _The number of available bays_
->      `Answer here...`
+>      `CarPark is responsible for this information as available_bays is a property of CarPark and it is calculated using attributes that are also instance attributes of CarPark (self.capacity & self.plates)`
 >    - _The current temperature_
->      `Answer here...`
+>      `CarPark is responsible for the temperature as this is assigned to the variable 'data' within the CarPark method 'update_displays(). It makes sense to set this once within the carpark and then supply the same information to all displays`
 >    - _The time_
->      `Answer here...`
+>      `We've not implemented time yet in the program, however much like the temperature, it would probably make sense to include this as part of the 'data' dictionary that is supplied to the displays as part of the 'update_displays()' method assuming we call the this method every second to ensure the time is displayed accurately at all times.`
 >
 > 2. **What is the difference between an attribute and a property?**
->    `Answer here...`
+>    `An attribute and a property are related, but the main difference being that whilst an attribute is simply a variable that directly assign something to, a property is a method that behaves like an attribute allowing you to carry out any calculations or whatnot to determine what is assigned to the property. You can then reference the property as as you would an attribute but unlike a regular attribute it is protected from being changed.`
 >
 > 3. **Why do you think we used a dictionary to hold the data we passed the display? List at least one advantage and one disadvantage of this approach.**
->    `Answer here...`
+>    `Having this information as a dictionary makes it easier to work with and also understand. Having the values assigned to keys makes it easy to access the data you want without worrying about index values changing as you would with a list. It also means the keys can be informative so that it's clear what each value is.`
 
 #### Add a detect vehicle method to the Sensor class
 
