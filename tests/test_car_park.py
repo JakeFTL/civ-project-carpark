@@ -7,7 +7,11 @@ from pathlib import Path
 class TestCarPark(unittest.TestCase):
     def setUp(self):
         self.log_name = "new_log.txt"
-        self.car_park = CarPark("123 Example Street", 100, log_file=self.log_name)
+        self.config_name = "config.json"
+        self.car_park = CarPark("123 Example Street",
+                                100,
+                                log_file=self.log_name,
+                                config_file=self.config_name)
 
     def test_car_park_initialized_with_all_attributes(self):
         self.assertIsInstance(self.car_park, CarPark)
@@ -18,6 +22,7 @@ class TestCarPark(unittest.TestCase):
         self.assertEqual(self.car_park.displays, [])
         self.assertEqual(self.car_park.available_bays, 100)
         self.assertEqual(self.car_park.log_file, Path(self.log_name))
+        self.assertEqual(self.car_park.config_file, Path(self.config_name))
 
     def test_add_car(self):
         self.car_park.add_car("FAKE-001")
@@ -60,10 +65,9 @@ class TestCarPark(unittest.TestCase):
 
     def tearDown(self):
         Path(self.log_name).unlink(missing_ok=True)
+        Path(self.config_name).unlink(missing_ok=True)
 
     def test_car_logged_when_entering(self):
-        # new_carpark = CarPark("123 Example Street", 100,
-        #                       log_file=self.log_name)
         self.car_park.add_car("NEW-001")
         with self.car_park.log_file.open() as f:
             last_line = f.readlines()[-1]
@@ -72,8 +76,6 @@ class TestCarPark(unittest.TestCase):
         self.assertIn("\n", last_line)  # check entry has a new line
 
     def test_car_logged_when_exiting(self):
-        # new_carpark = CarPark("123 Example Street", 100,
-        #                       log_file=self.log_name)
         self.car_park.add_car("NEW-001")
         self.car_park.remove_car("NEW-001")
         with self.car_park.log_file.open() as f:
@@ -81,6 +83,10 @@ class TestCarPark(unittest.TestCase):
         self.assertIn("NEW-001", last_line)  # check plate entered
         self.assertIn("exited", last_line)  # check description
         self.assertIn("\n", last_line)  # check entry has a new line
+
+    def test_config_file_created(self):
+        self.car_park.write_config()
+        self.assertTrue(Path(self.config_name).exists)
 
 
 if __name__ == "__main__":
